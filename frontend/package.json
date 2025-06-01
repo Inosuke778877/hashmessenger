@@ -1,28 +1,23 @@
 {
-  "name": "messenger-app-backend",
+  "name": "messenger-app-frontend",
   "version": "1.0.0",
-  "description": "Backend for a Discord-like messaging app",
-  "main": "server.js",
+  "description": "Frontend for a Discord-like messaging app deployed on Vercel",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
     "messenger",
-    "backend",
-    "node",
-    "express",
-    "socket.io"
+    "frontend",
+    "vercel",
+    "discord-like"
   ],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "cors": "^2.8.5",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "socket.io": "^4.7.2",
-    "sqlite3": "^5.1.6"
+  "devDependencies": {
+    "vite": "^5.0.0"
   }
 }
