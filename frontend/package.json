@@ -1,0 +1,23 @@
+{
+  "name": "messenger-app-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for a Discord-like messaging app deployed on Vercel",
+  "main": "index.js",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "messenger",
+    "frontend",
+    "vercel",
+    "discord-like"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
