@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      { "source": "/register", "destination": "/register.html" },
+      { "source": "/login", "destination": "/login.html" },
+      { "source": "/contacts", "destination": "/contacts.html" },
+      { "source": "/chat/:contactId", "destination": "/chat.html" }
+    ]
+  }

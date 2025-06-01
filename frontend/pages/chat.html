@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Wait for the window to load to ensure io is defined
+    window.onload = function() {
+      const socket = io();
+      const userId = '<%= userId %>';
+      const contactId = '<%= contactId %>';
+      const room = [userId, contactId].sort().join('-');
+
+      socket.emit('join', room);
+
+      socket.on('message', ({ senderId, message }) => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${senderId === userId ? 'sent' : 'received'}`;
+        msgDiv.textContent = message;
+        document.getElementById('messages').appendChild(msgDiv);
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+      });
+
+      function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const message = input.value.trim();
+        if (message) {
+          socket.emit('chatMessage', { room, message, senderId: userId });
+          input.value = '';
+        }
+      }
+
+      document.getElementById('messageInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+      });
+
+      document.getElementById('sendButton')?.addEventListener('click', sendMessage);
+    };
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <div class="sidebar">
+      <h2>Chat App</h2>
+      <p>Your ID: <%= userId %></p>
+      <form method="POST" action="/contacts/add">
+        <input type="text" name="contactId" placeholder="Enter contact ID" required>
+        <button type="submit">Add Contact</button>
+      </form>
+      <h2>Contacts</h2>
+      <div class="contact-list">
+        <ul>
+          <% contacts.forEach(contact => { %>
+            <li>
+              <a href="/chat/<%= contact.contactId %>"><%= contact.username %></a>
+              <form class="delete-contact-form" method="POST" action="/contacts/delete">
+                <input type="hidden" name="contactId" value="<%= contact.contactId %>">
+                <button type="submit" class="delete-contact-btn">🗑️</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+      <form class="delete-account-form" method="POST" action="/delete-account">
+        <button type="submit">Delete Account</button>
+      </form>
+    </div>
+    <div class="main-content">
+      <div class="chat-container">
+        <div id="messages"></div>
+        <div class="input-container">
+          <input id="messageInput" placeholder="Type a message..." autocomplete="off">
+          <button id="sendButton">Send</button>
+        </div>
+        <a class="back-to-contacts" href="/contacts">Back to Contacts</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
